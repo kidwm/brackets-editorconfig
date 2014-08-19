@@ -2,6 +2,7 @@
 
 > [EditorConfig](http://editorconfig.org) helps developers maintain consistent coding styles between different editors.
 
+Based on @MiguelCastillo's [Brackets-wsSanitizer](https://github.com/MiguelCastillo/Brackets-wsSanitizer) and utilizing [EditorConfig JavaScript Core](https://github.com/editorconfig/editorconfig-core-js) library.
 
 ## Supported properties
 

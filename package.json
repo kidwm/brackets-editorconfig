@@ -2,7 +2,8 @@
     "title": "EditorConfig",
     "name": "brackets-editorconfig",
     "description": "Supporting EditorConfig features",
-    "version": "0.0.1",
+    "keywords": ["editorconfig", "whitespace", "indentation", "newline"],
+    "version": "0.0.2",
     "author": "Chen-Heng Chang",
     "homepage": "http://editorconfig.org/",
     "repository": {

@@ -49,7 +49,6 @@ define(function (require, exports, module) {
 
         menu.addMenuDivider();
         menu.addMenuItem(COMMAND_ID);
-        menu.addMenuDivider();
 
         function setEnabled() {
             var enabled = !command.getChecked();
@@ -145,6 +144,8 @@ define(function (require, exports, module) {
     }
 
     function apply() {
+        trim_trailing_whitespace = false;
+        insert_final_newline = false;
         if (DocumentManager.getCurrentDocument())
         configDomain.exec("parse", DocumentManager.getCurrentDocument().file.fullPath)
             .done(function (config) {
