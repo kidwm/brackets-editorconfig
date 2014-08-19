@@ -1,0 +1,3 @@
+[submodule "node/editorconfig"]
+	path = node/lib
+	url = https://github.com/editorconfig/editorconfig-core-js.git

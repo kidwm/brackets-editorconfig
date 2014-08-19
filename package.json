@@ -1,0 +1,15 @@
+{
+    "title": "EditorConfig",
+    "name": "brackets-editorconfig",
+    "description": "Supporting EditorConfig features",
+    "version": "0.0.1",
+    "author": "Chen-Heng Chang",
+    "homepage": "http://editorconfig.org/",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/kidwm/brackets-editorconfig.git"
+    },
+    "engines": {
+        "brackets": ">=0.42.0"
+    }
+}
