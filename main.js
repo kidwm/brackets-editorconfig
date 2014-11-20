@@ -14,6 +14,7 @@ define(function (require, exports, module) {
         Commands           = brackets.getModule('command/Commands'),
         DocumentManager    = brackets.getModule('document/DocumentManager'),
         Editor             = brackets.getModule('editor/Editor').Editor,
+        MainViewManager    = brackets.getModule('view/MainViewManager'),
         Menus              = brackets.getModule('command/Menus'),
         PreferencesManager = brackets.getModule('preferences/PreferencesManager'),
         AppInit            = brackets.getModule("utils/AppInit"),
@@ -55,7 +56,7 @@ define(function (require, exports, module) {
             command.setChecked(enabled);
             prefs.set('enabled', enabled);
             $(DocumentManager)[enabled ? 'on' : 'off']('documentSaved', sanitize);
-            $(DocumentManager)[enabled ? 'on' : 'off']("currentDocumentChange", apply);
+            $(MainViewManager)[enabled ? 'on' : 'off']("currentFileChange", apply);
             if (enabled) apply();
         }
 

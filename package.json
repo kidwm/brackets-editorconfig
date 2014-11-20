@@ -3,7 +3,7 @@
     "name": "brackets-editorconfig",
     "description": "Supporting EditorConfig features",
     "keywords": ["editorconfig", "whitespace", "indentation", "newline"],
-    "version": "0.0.2",
+    "version": "0.0.3",
     "author": "Chen-Heng Chang",
     "homepage": "http://editorconfig.org/",
     "repository": {
@@ -11,6 +11,6 @@
         "url": "git://github.com/kidwm/brackets-editorconfig.git"
     },
     "engines": {
-        "brackets": ">=0.42.0"
+        "brackets": ">=0.44.0"
     }
 }
