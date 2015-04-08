@@ -55,8 +55,8 @@ define(function (require, exports, module) {
             var enabled = !command.getChecked();
             command.setChecked(enabled);
             prefs.set('enabled', enabled);
-            $(DocumentManager)[enabled ? 'on' : 'off']('documentSaved', sanitize);
-            $(MainViewManager)[enabled ? 'on' : 'off']("currentFileChange", apply);
+            DocumentManager[enabled ? 'on' : 'off']('documentSaved', sanitize);
+            MainViewManager[enabled ? 'on' : 'off']("currentFileChange", apply);
             if (enabled) apply();
         }
 
