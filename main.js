@@ -10,28 +10,28 @@
 define(function (require, exports, module) {
     'use strict';
 
-    var CommandManager     = brackets.getModule('command/CommandManager'),
-        Commands           = brackets.getModule('command/Commands'),
-        DocumentManager    = brackets.getModule('document/DocumentManager'),
-        Editor             = brackets.getModule('editor/Editor').Editor,
-        MainViewManager    = brackets.getModule('view/MainViewManager'),
-        Menus              = brackets.getModule('command/Menus'),
+    var CommandManager = brackets.getModule('command/CommandManager'),
+        Commands = brackets.getModule('command/Commands'),
+        DocumentManager = brackets.getModule('document/DocumentManager'),
+        Editor = brackets.getModule('editor/Editor').Editor,
+        MainViewManager = brackets.getModule('view/MainViewManager'),
+        Menus = brackets.getModule('command/Menus'),
         PreferencesManager = brackets.getModule('preferences/PreferencesManager'),
-        AppInit            = brackets.getModule("utils/AppInit"),
-        LanguageManager    = brackets.getModule("language/LanguageManager"),
-        ExtensionUtils     = brackets.getModule("utils/ExtensionUtils"),
-        NodeDomain         = brackets.getModule("utils/NodeDomain"),
-        PREFERENCES_KEY    = 'brackets-editorconfig',
-        prefs              = PreferencesManager.getExtensionPrefs(PREFERENCES_KEY);
+        AppInit = brackets.getModule("utils/AppInit"),
+        LanguageManager = brackets.getModule("language/LanguageManager"),
+        ExtensionUtils = brackets.getModule("utils/ExtensionUtils"),
+        NodeDomain = brackets.getModule("utils/NodeDomain"),
+        PREFERENCES_KEY = 'brackets-editorconfig',
+        prefs = PreferencesManager.getExtensionPrefs(PREFERENCES_KEY);
 
-        var _prefLocation = {
-            location: {
-                scope: "session"
-            }
-        };
-        var configDomain = new NodeDomain("editorconfig", ExtensionUtils.getModulePath(module, "node/domain"));
-        var trim_trailing_whitespace = false;
-        var insert_final_newline = false;
+    var _prefLocation = {
+        location: {
+            scope: "session"
+        }
+    };
+    var configDomain = new NodeDomain("editorconfig", ExtensionUtils.getModulePath(module, "node/domain"));
+    var trim_trailing_whitespace = false;
+    var insert_final_newline = false;
 
     LanguageManager.defineLanguage("editorconfig", {
         name: "EditorConfig",
@@ -43,10 +43,10 @@ define(function (require, exports, module) {
     prefs.definePreference("enabled", "boolean", "true");
 
     // Set up the menu and callback for it
-    (function() {
+    (function () {
         var COMMAND_ID = PREFERENCES_KEY,
-            menu       = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU),
-            command    = CommandManager.register('EditorConfig', COMMAND_ID, setEnabled);
+            menu = Menus.getMenu(Menus.AppMenuBar.EDIT_MENU),
+            command = CommandManager.register('EditorConfig', COMMAND_ID, setEnabled);
 
         menu.addMenuDivider();
         menu.addMenuItem(COMMAND_ID);
@@ -77,21 +77,25 @@ define(function (require, exports, module) {
                 match = pattern.exec(line);
                 if (trim_trailing_whitespace && match) {
                     doc.replaceRange(
-                        '',
-                        {line: lineIndex, ch: match.index},
-                        {line: lineIndex, ch: pattern.lastIndex}
+                        '', {
+                            line: lineIndex,
+                            ch: match.index
+                        }, {
+                            line: lineIndex,
+                            ch: pattern.lastIndex
+                        }
                     );
                 }
-/*
-                match = wsPattern.sanitizeLine(line);
-                if ( match.replaceWith ) {
-                    doc.replaceRange(
-                        match.replaceWith,
-                        {line: lineIndex, ch: match.start},
-                        {line: lineIndex, ch: match.end}
-                    );
-                }
-*/
+                /*
+                                match = wsPattern.sanitizeLine(line);
+                                if ( match.replaceWith ) {
+                                    doc.replaceRange(
+                                        match.replaceWith,
+                                        {line: lineIndex, ch: match.start},
+                                        {line: lineIndex, ch: match.end}
+                                    );
+                                }
+                */
                 lineIndex += 1;
             }
 
@@ -99,13 +103,17 @@ define(function (require, exports, module) {
             line = doc.getLine(lineIndex - 1);
             if (insert_final_newline && line !== undefined && line.length > 0 && line.slice(-1) !== '\n') {
                 doc.replaceRange(
-                    '\n',
-                    {line: lineIndex, ch: line.slice(-1)}
+                    '\n', {
+                        line: lineIndex,
+                        ch: line.slice(-1)
+                    }
                 );
             }
         });
 
-        CommandManager.execute(Commands.FILE_SAVE, {doc: doc});
+        CommandManager.execute(Commands.FILE_SAVE, {
+            doc: doc
+        });
     }
 
 
@@ -114,14 +122,14 @@ define(function (require, exports, module) {
             units: editor.getTabSize(),
             matchPattern: /^[ ]+/g,
             replaceWith: '\t',
-            getIndent: function(length) {
+            getIndent: function (length) {
                 return Math.round(length / pattern.units);
             }
-        }: {
+        } : {
             units: editor.getSpaceUnits(),
             matchPattern: /^[\t]+/g,
             replaceWith: ' ',
-            getIndent: function(length) {
+            getIndent: function (length) {
                 return length * pattern.units;
             }
         };
@@ -129,8 +137,8 @@ define(function (require, exports, module) {
 
         function sanitizeLine(line) {
             var regMatch = line.match(pattern.matchPattern);
-            var matches  = (regMatch || [''])[0];
-            var indent   = pattern.getIndent(matches.length);
+            var matches = (regMatch || [''])[0];
+            var indent = pattern.getIndent(matches.length);
 
             return {
                 replaceWith: new Array(indent + 1).join(pattern.replaceWith),
@@ -148,10 +156,10 @@ define(function (require, exports, module) {
         trim_trailing_whitespace = false;
         insert_final_newline = false;
         if (DocumentManager.getCurrentDocument())
-        configDomain.exec("parse", DocumentManager.getCurrentDocument().file.fullPath)
+            configDomain.exec("parse", DocumentManager.getCurrentDocument().file.fullPath)
             .done(function (config) {
                 if (JSON.stringify(config) !== "{}") {
-                    PreferencesManager.set("useTabChar", (config.indent_style === 'tab' ) ? true : false, _prefLocation);
+                    PreferencesManager.set("useTabChar", (config.indent_style === 'tab') ? true : false, _prefLocation);
                     if (config.indent_style === 'tab' && config.indent_size) {
                         PreferencesManager.set("tabSize", config.indent_size, _prefLocation);
                     }
